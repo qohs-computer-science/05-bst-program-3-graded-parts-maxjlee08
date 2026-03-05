@@ -21,6 +21,29 @@
     tree.postOrder();
     tree.inOrder();
 
+    System.out.println("Delete 'O': ");
+    tree.delete("O");
+    tree.inOrder();
+
+    System.out.println("Delete 'E': ");
+    tree.delete("E");
+    tree.inOrder();
+
+    System.out.println("Delete 'Q': ");
+    tree.delete("Q");
+    tree.inOrder();
+
+    System.out.println("Delete 'R': ");
+    tree.delete("R");
+    tree.inOrder();
+
+    
+
+    
+
+
+
+    
 
 	
  }
