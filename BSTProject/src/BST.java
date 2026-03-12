@@ -112,24 +112,27 @@ public class BST implements BSTInterface
         }
     }//inOrderHelper
 
-    public void delete(Comparable value)
+    public boolean delete(Comparable old)
     {
         if(root == null)
-            return;
+            return false;
 
-        if(((Comparable) value).compareTo(root.getValue())==0)
+        if(((Comparable) old).compareTo(root.getValue())==0)
         {
             if(root.getLeft() == null && root.getRight() == null)
             {
                 root = null;
+                return true;
             }
             else if (root.getLeft() == null)
             {
                 root = root.getRight();
+                return true;
             }
             else if (root.getRight() == null)
             {
                 root = root.getLeft();
+                return true;
             }
             else
             {
@@ -139,18 +142,19 @@ public class BST implements BSTInterface
                     temp = temp.getLeft();
                 }
                 root.setValue(temp.getValue());
-                delete(temp.getValue());
+                deleteHelper(temp.getValue(), root);
+                return true;
             }
         }//end if
         else{
-            deleteHelper(value, root);
+            return deleteHelper(old, root);
         }//end else
     }//end delete
     
-    private void deleteHelper(Comparable value, TreeNode parent)
+    private boolean deleteHelper(Comparable value, TreeNode parent)
     {
         if(parent == null)
-            return;
+            return false;
 
         if(parent.getLeft() != null && ((Comparable) value).compareTo(parent.getLeft().getValue()) == 0)
         {
@@ -158,15 +162,17 @@ public class BST implements BSTInterface
             if(parent.getLeft().getLeft() == null && parent.getLeft().getRight() == null)
             {
                 parent.setLeft(null);
-            
+                return true;
             }
             else if(temp.getLeft() == null)
             {
                 parent.setLeft(temp.getRight());
+                return true;
             }
             else if(temp.getRight() == null)
             {
                 parent.setLeft(temp.getLeft());
+                return true;
             }
             else
             {
@@ -176,7 +182,7 @@ public class BST implements BSTInterface
                     temp2 = temp2.getLeft();
                 }
                 temp.setValue(temp2.getValue());
-                deleteHelper(temp2.getValue(), temp);
+                return deleteHelper(temp2.getValue(), temp);
             }
             }
             
@@ -212,7 +218,55 @@ public class BST implements BSTInterface
             }
             else
             deleteHelper(value, parent.getRight());
+            return false;
+ 
         }//end deleteHelper
+
+        //Find
+        public boolean find(Comparable toFind)
+            {
+                return findHelper(toFind, root);
+            }//end find
+
+            private boolean findHelper(Comparable value, TreeNode subroot)
+            {
+                if(subroot == null)
+                    return false;
+                if(((Comparable) value).compareTo(subroot.getValue()) == 0)
+                    return true;
+                else if(((Comparable) value).compareTo(subroot.getValue()) < 0)
+                    return findHelper(value, subroot.getLeft());
+                else
+                    return findHelper(value, subroot.getRight());
+            }//end findHelper
+
+            public boolean replace(Comparable old, Comparable toAdd)
+            {
+                if(find(old))
+                {
+                    return replaceHelper(old, toAdd, root);
+                }
+                else
+                {
+                    add(toAdd);
+                    return false;
+                }
+
+                private boolean replaceHelper(Comparable old, Comparable toAdd, TreeNode subroot)
+                {
+                    if(subroot == null)
+                        return false;
+                    if(((Comparable) old).compareTo(subroot.getValue()) == 0)
+                    {
+                        subroot.setValue(toAdd);
+                        return true;
+                    }
+                    else if(((Comparable) old).compareTo(subroot.getValue()) < 0)
+                        return replaceHelper(old, toAdd, subroot.getLeft());
+                    else
+                        return replaceHelper(old, toAdd, subroot.getRight());
+                }//end replaceHelper
+            }//end replace
     }//end BST
     
             
