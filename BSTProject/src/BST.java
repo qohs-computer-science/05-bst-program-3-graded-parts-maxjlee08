@@ -251,22 +251,23 @@ public class BST implements BSTInterface
                     add(toAdd);
                     return false;
                 }
-
-                private boolean replaceHelper(Comparable old, Comparable toAdd, TreeNode subroot)
-                {
-                    if(subroot == null)
-                        return false;
-                    if(((Comparable) old).compareTo(subroot.getValue()) == 0)
-                    {
-                        subroot.setValue(toAdd);
-                        return true;
-                    }
-                    else if(((Comparable) old).compareTo(subroot.getValue()) < 0)
-                        return replaceHelper(old, toAdd, subroot.getLeft());
-                    else
-                        return replaceHelper(old, toAdd, subroot.getRight());
-                }//end replaceHelper
             }//end replace
+
+            private boolean replaceHelper(Comparable old, Comparable toAdd, TreeNode subroot)
+            {
+                if(subroot == null)
+                    return false;
+                if(((Comparable) old).compareTo(subroot.getValue()) == 0)
+                {
+                    delete(old);
+                    add(toAdd);
+                    return true;
+                }
+                else if(((Comparable) old).compareTo(subroot.getValue()) < 0)
+                    return replaceHelper(old, toAdd, subroot.getLeft());
+                else
+                    return replaceHelper(old, toAdd, subroot.getRight());
+            }//end replaceHelper
     }//end BST
     
             
